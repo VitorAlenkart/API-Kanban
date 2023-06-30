@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const connection = require("./database/connection");
+const connection = require("./db/connection");
 const bodyParser = require('body-parser')
 const ejs = require('ejs')
 
@@ -11,7 +11,7 @@ const Tag = require("./tags/Tag");
 
 
 // Database
-const tags = Tag.findAll();
+// const tags = Tag.findAll();
 // console.log(tags)
 
 
@@ -38,9 +38,37 @@ app.use(bodyParser.json());
 
 
 // Routes
-app.get('/', (req,res) => {
-    res.render('./index')
+app.get('/', async (req,res) => {
+
+    res.render('./index',)
 })
+
+app.get('/new/todo', async (req,res) => {
+    const tags = await Tag.findAll();
+    res.render('./new/toDo',{tags: tags})
+})
+
+app.post('/save/toDo', async (req,res) => {
+
+    const tagTitle = '';
+    const toDo = req.body;
+
+    const tag = await Tag.findAll({
+        where: {
+            id: toDo.tag
+        }
+    })
+
+    toDo.tag.forEach(e => {
+        console.log(tag.find(element => element == e))
+    });
+    console.log(toDo.tag)
+
+
+    res.render('./',{toDo: toDo})
+})
+
+
 
 
 // Connection

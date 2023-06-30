@@ -1,12 +1,15 @@
 const Sequelize = require("sequelize");
-const connection = require("../database/connection");
+const connection = require("../db/connection");
 
 const Tag = connection.define('Tag',{
-    title: {
+    name: {
         type: Sequelize.STRING,
         allowNull: false
     }
+}, {
+    Sequelize, modelName: 'tag'
 });
+
 
 
 module.exports = Tag;

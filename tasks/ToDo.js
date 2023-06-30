@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const connection = require("../database/connection");
+const connection = require("../db/connection");
 const Tag = require("../tags/Tag")
 
 
@@ -12,16 +12,27 @@ const ToDo = connection.define('ToDo',{
         type: Sequelize.TEXT,
         allowNull: false
     },
-    tags: {
-        type: Sequelize.STRING
-    },
     hexColor: {
         type: Sequelize.STRING
     }
+},{
+
 });
 
 ToDo.hasMany(Tag);
 
+ToDo.create({
+    title:'Teste 1',
+
+    description:"Opa, primeiro teste do dia...",
+    hex: 'a',
+        tags: [ 
+        {name: 'tag1'},
+        {name: 'tag2'},
+    ]
+},{
+    include: [ Tag ]
+})
 
 
 

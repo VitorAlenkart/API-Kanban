@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const connection = require("../database/connection");
+const connection = require("../db/connection");
 const Tag = require("../tags/Tag")
 
 
@@ -19,10 +19,5 @@ const Doing = connection.define('Doing',{
         type: Sequelize.STRING
     }
 });
-
-
-Doing.hasMany(Tag);
-
-
 
 module.exports = Doing;

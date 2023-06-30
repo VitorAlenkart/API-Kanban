@@ -6,15 +6,12 @@
 </head>
 <body>
     <div class="container">
-        <form action="" method="post">
-            <label for="tarefa">Tarefa</label><br>
-            <input type="text" name="tarefa" placeholder="Titulo">
-            <br>
-            <label for="descricao">Descrição</label><br>
-            <input type="text" name="descricao" placeholder="Descrição">
-            <br>
-            
-        </form>
+
+        titulo <%= toDo.title %> <br>
+        descrição <%= toDo.description %> <br>
+        tag <%= toDo.tag %> <br>
+        cor <%= toDo.hexColor %> <br>
+
     </div>
     
 </body>

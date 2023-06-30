@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const connection = require("../database/connection");
+const connection = require("../db/connection");
 const Tag = require("../tags/Tag")
 
 
@@ -21,7 +21,7 @@ const Done = connection.define('Done',{
 });
 
 
-Done.hasMany(Tag);
+
 
 
 
