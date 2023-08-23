@@ -4,16 +4,14 @@ const connection = require("./db/connection");
 const bodyParser = require('body-parser')
 const ejs = require('ejs')
 
-const Doing = require("./tasks/Doing");
+
+async function main() {await connection.sync() }
+
+//const Doing = require("./tasks/Doing");
 const ToDo = require("./tasks/ToDo");
-const Done = require("./tasks/Done");
+//const Done = require("./tasks/Done");
 const Tag = require("./tags/Tag");
-
-
-// Database
-// const tags = Tag.findAll();
-// console.log(tags)
-
+const TagToDo = require("./tags/TagToDo")
 
 
 
@@ -38,36 +36,51 @@ app.use(bodyParser.json());
 
 
 // Routes
-app.get('/', async (req,res) => {
 
-    res.render('./index',)
-})
-
-app.get('/new/todo', async (req,res) => {
-    const tags = await Tag.findAll();
-    res.render('./new/toDo',{tags: tags})
-})
-
-app.post('/save/toDo', async (req,res) => {
-
-    const tagTitle = '';
-    const toDo = req.body;
-
-    const tag = await Tag.findAll({
-        where: {
-            id: toDo.tag
-        }
+app.post("/tag/:name",async (req, res) => {
+    let name = req.params.name;
+    await Tag.create({
+        name: name
     })
+    res.json(`Tag ${name} criada com sucesso`)
+});
 
-    toDo.tag.forEach(e => {
-        console.log(tag.find(element => element == e))
-    });
-    console.log(toDo.tag)
+app.post("/todo/:title/:description",async (req, res) => {
+    let title = req.params.title;
+    let description = req.params.description;
+    await ToDo.create({
+        title: title,
+        description: description
+    })
+    res.json(`Tarefa: ${title} e Descrição: ${description}
+    Criada com sucesso!`)
+});
 
+app.post("/addTag",async (req,res) => {
+    let tag1 = parseInt(req.params.tag1);
+    let tag2 = parseInt(req.params.tag2);
+    let todo = parseInt(req.params.todo);
 
-    res.render('./',{toDo: toDo})
+    let tagId1 = await Tag.findByPk(tag1)
+    let tagId2 = await Tag.findByPk(tag2)
+    let toDoId = await ToDo.findByPk(todo)
+
+    await toDoId.addTags([tagId1,tagId2]);
+    res.json("Acho que deu certo kk");
 })
 
+app.get("/todo/:toDoId",async (req,res) => {
+    const toDoId = parseInt(req.params.toDoId);
+
+    const results = await ToDo.findByPk(toDoId,{
+        include:[{
+            include: [Tag]
+        }]
+    });
+
+    res.json(results)
+
+})
 
 
 

@@ -1,9 +1,15 @@
 const Sequelize = require("sequelize");
 const connection = require("../db/connection");
-const Tag = require("../tags/Tag")
-
+const Tag =  require("../tags/Tag")
+const TagToDo =  require("../tags/TagToDo")
 
 const ToDo = connection.define('ToDo',{
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false
+    },
     title: {
         type: Sequelize.STRING,
         allowNull: false
@@ -15,25 +21,10 @@ const ToDo = connection.define('ToDo',{
     hexColor: {
         type: Sequelize.STRING
     }
-},{
-
 });
 
-ToDo.hasMany(Tag);
-
-ToDo.create({
-    title:'Teste 1',
-
-    description:"Opa, primeiro teste do dia...",
-    hex: 'a',
-        tags: [ 
-        {name: 'tag1'},
-        {name: 'tag2'},
-    ]
-},{
-    include: [ Tag ]
-})
-
+Tag.belongsToMany(ToDo, {through: TagToDo, foreignKey: 'tagId'})
+ToDo.belongsToMany(Tag, {through: TagToDo, foreignKey: 'toDoId'})
 
 
 module.exports = ToDo;
