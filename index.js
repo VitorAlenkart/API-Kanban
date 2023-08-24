@@ -4,15 +4,11 @@ const connection = require("./db/connection");
 const bodyParser = require('body-parser')
 const ejs = require('ejs')
 
-
-async function main() {await connection.sync() }
-
 //const Doing = require("./tasks/Doing");
 const ToDo = require("./tasks/ToDo");
 //const Done = require("./tasks/Done");
 const Tag = require("./tags/Tag");
 const TagToDo = require("./tags/TagToDo")
-
 
 
 // View Engine 
@@ -37,49 +33,55 @@ app.use(bodyParser.json());
 
 // Routes
 
-app.post("/tag/:name",async (req, res) => {
-    let name = req.params.name;
+app.post("/new/tag/:tag",async (req, res) => {
+    let name = req.params.tag;
     await Tag.create({
         name: name
     })
     res.json(`Tag ${name} criada com sucesso`)
 });
 
-app.post("/todo/:title/:description",async (req, res) => {
-    let title = req.params.title;
-    let description = req.params.description;
+app.post("/new/todo",async (req, res) => {
+    let data = req.body;
     await ToDo.create({
-        title: title,
-        description: description
+        title: data.title,
+        description: data.description
     })
-    res.json(`Tarefa: ${title} e Descrição: ${description}
-    Criada com sucesso!`)
+    res.json(`Tarefa: ${data.title} e Descrição: ${data.description} Criada com sucesso!`)
 });
 
-app.post("/addTag",async (req,res) => {
-    let tag1 = parseInt(req.params.tag1);
-    let tag2 = parseInt(req.params.tag2);
-    let todo = parseInt(req.params.todo);
-
-    let tagId1 = await Tag.findByPk(tag1)
-    let tagId2 = await Tag.findByPk(tag2)
-    let toDoId = await ToDo.findByPk(todo)
-
-    await toDoId.addTags([tagId1,tagId2]);
-    res.json("Acho que deu certo kk");
+app.get("/todo",async (req,res) => {
+    const results = await ToDo.findAll();
+    res.json(results)
 })
 
 app.get("/todo/:toDoId",async (req,res) => {
     const toDoId = parseInt(req.params.toDoId);
 
     const results = await ToDo.findByPk(toDoId,{
-        include:[{
-            include: [Tag]
-        }]
+        include: Tag,
+        as: 'pinto'
     });
 
     res.json(results)
+})
 
+app.post("/add/tag/:idToDo/:idTag",async (req,res) => {
+    const idTag = parseInt(req.params.idTag)
+    const idToDo = parseInt(req.params.idToDo)
+
+    const tag = await Tag.findByPk(idTag)
+    const toDo = await ToDo.findByPk(idToDo,{
+        include: [
+            {
+                model: Tag
+            }
+        ]
+    })
+
+    await toDo.addTags([tag])
+    console.log(toDo.dataValues)
+    res.json(toDo)
 })
 
 

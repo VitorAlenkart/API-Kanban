@@ -11,26 +11,12 @@
 
     <div class="container">
         <h3>Adicione uma tarefa nova em: A fazer</h3> <hr>
-    <form action="/save/toDo" method="post">
+    <form action="/new/toDo" method="post">
         <label for="title">Title</label><br>
         <input type="text" name="title"><br> <br>
 
         <label for="description">Description</label><br>
-        <input type="text" name="description"><br> <br>
-
-        <label for="tags">Tags</label><br>
-
-
-        <select name="tag" multiple="true">
-        <% tags.forEach(tag => { %>
-            <%= tag.id %>
-            <option value="<%= tag.id %>"><%= tag.title %></option>
-            
-        <% }) %> 
-    </select><br>
-
-        <label for="hexColor">hexColor</label> <br>
-        <input type="color" name="hexColor"><br><br>
+        <input type="text" name="description" id="description"><br>
 
         <button type="submit">Mandar</button>
     </form>

@@ -25,6 +25,10 @@ const ToDo = connection.define('ToDo',{
 
 Tag.belongsToMany(ToDo, {through: TagToDo, foreignKey: 'tagId'})
 ToDo.belongsToMany(Tag, {through: TagToDo, foreignKey: 'toDoId'})
+ToDo.hasMany(TagToDo)
+Tag.hasMany(TagToDo)
+TagToDo.belongsTo(Tag)
+TagToDo.belongsTo(ToDo)
 
 
 module.exports = ToDo;
