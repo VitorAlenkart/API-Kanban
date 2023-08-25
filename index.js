@@ -33,6 +33,10 @@ app.use(bodyParser.json());
 
 // Routes
 
+app.get("/",(req,res) => {
+    res.json("Ok")
+})
+
 // ADICIONAR NOVA TAG 
 
 app.post("/new/tag",async (req, res) => {
