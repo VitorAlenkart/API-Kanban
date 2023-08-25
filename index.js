@@ -33,6 +33,8 @@ app.use(bodyParser.json());
 
 // Routes
 
+// ADICIONAR NOVA TAG 
+
 app.post("/new/tag/:tag",async (req, res) => {
     let name = req.params.tag;
     await Tag.create({
@@ -40,6 +42,8 @@ app.post("/new/tag/:tag",async (req, res) => {
     })
     res.json(`Tag ${name} criada com sucesso`)
 });
+
+// ADICIONAR NOVO TODO
 
 app.post("/new/todo",async (req, res) => {
     let data = req.body;
@@ -50,21 +54,45 @@ app.post("/new/todo",async (req, res) => {
     res.json(`Tarefa: ${data.title} e Descrição: ${data.description} Criada com sucesso!`)
 });
 
+// VER TODOS OS TODO'S
+
 app.get("/todo",async (req,res) => {
     const results = await ToDo.findAll();
     res.json(results)
 })
 
+// VER TODAS AS TAG'S
+
+app.get("/tag",async (req,res) => {
+    const results = await Tag.findAll();
+    res.json(results)
+})
+
+// VER TODOS OS TODO'S E TAG'S RELACIONADAS
+
 app.get("/todo/:toDoId",async (req,res) => {
     const toDoId = parseInt(req.params.toDoId);
 
     const results = await ToDo.findByPk(toDoId,{
-        include: Tag,
-        as: 'pinto'
+        include: Tag
     });
 
     res.json(results)
 })
+
+// VER AS TAG E TODOS OS TODO'S RELACIONADO
+
+app.get("/tag/:tagId",async (req,res) => {
+    const tagId = parseInt(req.params.tagId);
+
+    const results = await Tag.findByPk(tagId,{
+        include: ToDo
+    });
+
+    res.json(results)
+})
+
+// RELACIONAR TODO COM UMA TAG
 
 app.post("/add/tag/:idToDo/:idTag",async (req,res) => {
     const idTag = parseInt(req.params.idTag)
