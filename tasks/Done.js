@@ -13,9 +13,6 @@ const Done = connection.define('Done',{
         type: Sequelize.TEXT,
         allowNull: false
     },
-    tags: {
-        type: Sequelize.STRING
-    },
     hexColor: {
         type: Sequelize.STRING
     }
