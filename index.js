@@ -4,9 +4,9 @@ const connection = require("./db/connection");
 const bodyParser = require('body-parser')
 const ejs = require('ejs')
 
-//const Doing = require("./tasks/Doing");
+const Doing = require("./tasks/Doing");
 const ToDo = require("./tasks/ToDo");
-//const Done = require("./tasks/Done");
+const Done = require("./tasks/Done");
 const Tag = require("./tags/Tag");
 const TagToDo = require("./tags/TagToDo")
 
