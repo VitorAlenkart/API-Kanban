@@ -3,6 +3,7 @@ const app = express();
 const connection = require("./db/connection");
 const bodyParser = require('body-parser')
 const ejs = require('ejs')
+const port = process.env.PORT || 3000
 
 const Doing = require("./tasks/Doing");
 const ToDo = require("./tasks/ToDo");
@@ -217,7 +218,7 @@ app.post("/add/tag/:task/:idTask/:idTag",async (req,res) => {
 
 
 // Connection
-app.listen("8080",(err) => {
+app.listen(port,(err) => {
     if(err){
         console.log(err);
     }else{
