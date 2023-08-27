@@ -84,35 +84,35 @@ app.post(senha+"/new/done",async (req, res) => {
 
 // VER TODOS OS TODO'S
 
-app.get(senha+"/todo",async (req,res) => {
+app.get("/todo",async (req,res) => {
     const results = await ToDo.findAll();
     res.json(results)
 })
 
 // VER TODOS OS DONE'S
 
-app.get(senha+"/done",async (req,res) => {
+app.get("/done",async (req,res) => {
     const results = await Done.findAll();
     res.json(results)
 })
 
 // VER TODOS OS DOING'S
 
-app.get(senha+"/doing",async (req,res) => {
+app.get("/doing",async (req,res) => {
     const results = await Doing.findAll();
     res.json(results)
 })
 
 // VER TODAS AS TAG'S
 
-app.get(senha+"/tag",async (req,res) => {
+app.get("/tag",async (req,res) => {
     const results = await Tag.findAll();
     res.json(results)
 })
 
 // VER TODOS OS TODO'S E TAG'S RELACIONADAS
 
-app.get(senha+"/todo/:toDoId",async (req,res) => {
+app.get("/todo/:toDoId",async (req,res) => {
     const toDoId = parseInt(req.params.toDoId);
 
     const results = await ToDo.findByPk(toDoId,{
@@ -124,7 +124,7 @@ app.get(senha+"/todo/:toDoId",async (req,res) => {
 
 // VER TODOS OS DOING'S E TAG'S RELACIONADAS
 
-app.get(senha+"/doing/:doingId",async (req,res) => {
+app.get("/doing/:doingId",async (req,res) => {
     const doingId = parseInt(req.params.doingId);
 
     const results = await Doing.findByPk(doingId,{
@@ -136,7 +136,7 @@ app.get(senha+"/doing/:doingId",async (req,res) => {
 
 // VER TODOS OS DONE'S E TAG'S RELACIONADAS
 
-app.get(senha+"/done/:doneId",async (req,res) => {
+app.get("/done/:doneId",async (req,res) => {
     const doneId = parseInt(req.params.doneId);
 
     const results = await Done.findByPk(doneId,{
@@ -148,7 +148,7 @@ app.get(senha+"/done/:doneId",async (req,res) => {
 
 // VER AS TAG E TODOS OS TODO'S RELACIONADO
 
-app.get(senha+"/tag/:tagId",async (req,res) => {
+app.get("/tag/:tagId",async (req,res) => {
     const tagId = parseInt(req.params.tagId);
 
     const results = await Tag.findByPk(tagId,{
