@@ -3,14 +3,14 @@ const app = express();
 const connection = require("./db/connection");
 const bodyParser = require('body-parser')
 const ejs = require('ejs')
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3000;
+require('dotenv').config()
 
 const Doing = require("./tasks/Doing");
 const ToDo = require("./tasks/ToDo");
 const Done = require("./tasks/Done");
 const Tag = require("./tags/Tag");
 const TagToDo = require("./tags/TagToDo")
-
 
 // View Engine 
 app.set("views","./views")
