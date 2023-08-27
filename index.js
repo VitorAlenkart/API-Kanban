@@ -4,7 +4,7 @@ const connection = require("./db/connection");
 const bodyParser = require('body-parser')
 const ejs = require('ejs')
 const port = process.env.PORT || 3000;
-const senha = toString(process.env.PASS);
+const senha = process.env.PASS;
 require('dotenv').config()
 
 const Doing = require("./tasks/Doing");
