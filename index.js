@@ -4,6 +4,7 @@ const connection = require("./db/connection");
 const bodyParser = require('body-parser')
 const ejs = require('ejs')
 const port = process.env.PORT || 3000;
+const senha = toString(process.env.PASS);
 require('dotenv').config()
 
 const Doing = require("./tasks/Doing");
@@ -34,13 +35,13 @@ app.use(bodyParser.json());
 
 // Routes
 
-app.get("/",(req,res) => {
+app.get(senha,(req,res) => {
     res.json("Ok")
 })
 
 // ADICIONAR NOVA TAG 
 
-app.post("/new/tag",async (req, res) => {
+app.post(senha+"/new/tag",async (req, res) => {
     let data = req.body;
     await Tag.create({
         name: data.name
